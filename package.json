@@ -1,0 +1,15 @@
+{
+  "dependencies": {
+    "axios": "^0.24.0",
+    "cli-progress": "^3.9.1",
+    "graphql-request": "^3.7.0"
+  },
+  "devDependencies": {
+    "@types/axios": "^0.14.0",
+    "@types/cli-progress": "^3.9.2",
+    "ts-node": "^10.4.0"
+  },
+  "scripts": {
+    "start": "ts-node --files ./src/Main.ts"
+  }
+}
