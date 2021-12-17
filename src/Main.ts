@@ -1,4 +1,3 @@
-// pull data from https://raw.githubusercontent.com/TarkovTracker/tarkovdata/master/quests.json
 import ItemGrabber from './Items'
 import { writeFileSync, readFileSync } from 'fs'
 
