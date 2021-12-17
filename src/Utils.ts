@@ -29,15 +29,17 @@ export function CreateHyperlinks(line: string) {
         const start = result.indexOf('[[')
         const end = result.indexOf(']]')
 
-        const mentionedItem = result
-            .substring(start + 2, end)
-            .replaceAll(' ', '_')
-            .split('|')[0]
+        const mentionedItem = result.substring(start + 2, end)
 
         result = result.removeChar(start)
         result = result.removeChar(end)
 
-        result = result.insert(`(https://escapefromtarkov.fandom.com/wiki/${mentionedItem})`, end)
+        const itemName = mentionedItem.includes('|') ? mentionedItem.split('|')[1] : mentionedItem
+        const pageTitle = mentionedItem.replaceAll(' ', '_').split('|')[0]
+
+        result = result.insert(`[${itemName}](https://escapefromtarkov.fandom.com/wiki/${pageTitle})`, end)
+
+        result = result.replace(`[${mentionedItem}]`, '')
     }
 
     return result

@@ -68,7 +68,8 @@ export default async function (): Promise<string[]> {
             <summary>Where to find this item?</summary>
 
 
-            ${wikiInfo.join('\n-    ')}
+            ${wikiInfo.length > 1 ? '-   General' : ''}
+            ${wikiInfo.join('\n')}
             </details>
         `
 
@@ -84,8 +85,9 @@ export default async function (): Promise<string[]> {
         })
 }
 
+/**Scrapes and extracts text from the wiki*/
 async function WikiInfo(item: Item) {
-    if (Overrides[item.id] !== undefined) return Overrides[item.id]
+    if (Overrides[item.name] !== undefined) return Overrides[item.name]
 
     const wikiTitle = item.wikiLink.replace('https://escapefromtarkov.fandom.com/wiki/', '')
 
@@ -104,40 +106,33 @@ async function WikiInfo(item: Item) {
             return ['No Special Locations']
         }
 
-        let output: string[] = []
-
-        output = locationData
+        return locationData
+            .filter((line) => {
+                // Only give us lines that have useful information
+                return line.startsWith('*') || line.startsWith('===[[')
+            })
             .map((l) => {
                 let line = l
 
-                if (
-                    line.startsWith('<') ||
-                    line.startsWith('File:') ||
-                    line.startsWith('{{') ||
-                    line.startsWith('[') ||
-                    line.startsWith('|') ||
-                    line.startsWith('\uFEFF')
-                ) {
-                    return ''
+                if (line.startsWith('*')) {
+                    // Bulleted location on the map
+                    line = line.replace('* ', '').replace('*', '')
+                    line = `    -   ${line}`
+                } else if (line.startsWith('===')) {
+                    // Name of map
+                    line = line.replace('===', '').replace('===', '')
+                    line = `-   ${line}`
                 }
 
-                if (line.startsWith('*')) line = line.slice(1)
-                if (line.startsWith('* ')) line = line.slice(2)
-                if (line.startsWith(' ')) line = line.slice(1)
+                // {{PAGENAME}} is a variable for the items name so we use it as such
+                line = line.replaceAll('{{PAGENAME}}', item.shortName)
 
-                line = line.replace('{{PAGENAME}}', item.shortName)
-
-                if (line.startsWith('===[')) line = line.slice(3) + line.slice(0, -3)
-
-                if (line.includes('======')) {
-                    line = line.slice(0, line.indexOf('======'))
-                }
+                // Remove excess HTML tags
+                line = line.replaceAll('<[^>]*>', '')
 
                 return CreateHyperlinks(line)
             })
             .filter((l) => l !== '')
-
-        return output
     } else {
         return ['No Special Locations']
     }
