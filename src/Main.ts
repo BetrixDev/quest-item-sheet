@@ -2,6 +2,9 @@ import ItemGrabber from './Items'
 import { writeFileSync, readFileSync } from 'fs'
 
 const main = async () => {
+    console.log('Quest Item Sheet Grabber')
+    console.log('\n')
+
     const itemData = await ItemGrabber()
 
     const base = String(readFileSync('base.md')).toString()
@@ -15,6 +18,8 @@ const main = async () => {
         .join('\n')
 
     writeFileSync('output.md', output)
+
+    console.log('Wrote file to "output.md"')
 }
 
 main()

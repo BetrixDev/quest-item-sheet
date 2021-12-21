@@ -44,3 +44,7 @@ export function CreateHyperlinks(line: string) {
 
     return result
 }
+
+export function FormatNumber(num: number) {
+    return String(num).replace(/(.)(?=(\d{3})+$)/g, '$1,')
+}

@@ -1,6 +1,14 @@
 import RequestData from './Data'
-import { CreateHyperlinks, GrabWikiPage } from './Utils'
+import { CreateHyperlinks, FormatNumber, GrabWikiPage } from './Utils'
 import { readFileSync } from 'fs'
+import cliProgress from 'cli-progress'
+
+const bar = new cliProgress.SingleBar({
+    format: 'Gathering Items: {bar} - {value}/{total}',
+    barCompleteChar: '\u2588',
+    barIncompleteChar: '\u2591',
+    hideCursor: true
+})
 
 const Overrides = JSON.parse(String(readFileSync('overrides.json')).toString()) as Override
 
@@ -40,9 +48,13 @@ export default async function (): Promise<string[]> {
         })
     })
 
+    bar.start(Object.keys(questItems).length, 0)
+
     let output: OutputArray[] = []
 
     for (const id in questItems) {
+        bar.increment()
+
         const { count, quests } = questItems[id]
         const item = itemData[id]
 
@@ -52,7 +64,7 @@ export default async function (): Promise<string[]> {
 
         const markdown = `
             ## [${item.name}](${item.wikiLink})
-            ${shortName} ${shortName[shortName.length - 1] === 's' ? 'are' : 'is'} used **${count}** time${
+            ${shortName} ${shortName[shortName.length - 1] === 's' ? 'are' : 'is'} needed **${FormatNumber(count)}** time${
             count === 1 ? '' : 's'
         } in the following quests:
 
