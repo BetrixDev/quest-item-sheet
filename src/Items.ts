@@ -80,7 +80,7 @@ export default async function (): Promise<string[]> {
             <summary>Where to find this item?</summary>
 
 
-            ${wikiInfo.length > 1 ? '-   General' : ''}
+            ${wikiInfo.length > 2 ? '-   General' : ''}
             ${wikiInfo.join('\n')}
             </details>
         `
@@ -99,7 +99,7 @@ export default async function (): Promise<string[]> {
 
 /**Scrapes and extracts text from the wiki*/
 async function WikiInfo(item: Item) {
-    if (Overrides[item.name] !== undefined) return Overrides[item.name]
+    if (Overrides[item.name] !== undefined) return Overrides[item.name].map((line) => CreateHyperlinks(line))
 
     const wikiTitle = item.wikiLink.replace('https://escapefromtarkov.fandom.com/wiki/', '')
 

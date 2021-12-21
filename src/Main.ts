@@ -17,6 +17,7 @@ const main = async () => {
         })
         .join('\n')
 
+    console.log('\n')
     writeFileSync('output.md', output)
 
     console.log('Wrote file to "output.md"')

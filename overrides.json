@@ -1,11 +1,19 @@
 {
     "Cultist knife": [
-        "In the pocket of [Cultists](https://escapefromtarkov.fandom.com/wiki/Cultists)"
+        "-  [[Shoreline]], [[Woods]], [[Customs]], [[Factory | Night Factory]]",
+        "   -  In the pocket of [[Cultists]]"
     ],
     "Dogtag BEAR": [
-        "Killing players under the [BEAR](https://escapefromtarkov.fandom.com/wiki/BEAR) faction and looting their [dogtag](https://escapefromtarkov.fandom.com/wiki/Dogtag)"
+        "-  Killing players under the [[BEAR]] faction and looting their [[Dogtag]]"
     ],
     "Dogtag USEC": [
-        "Killing players under the [USEC](https://escapefromtarkov.fandom.com/wiki/USEC) faction and looting their [dogtag](https://escapefromtarkov.fandom.com/wiki/Dogtag)"
+        "-  Killing players under the [[USEC]] faction and looting their [[Dogtag]]"
+    ],
+    "Secure container Epsilon": [
+        "-   Obtainable by completing Prapor's Quest [[The Punisher - Part 6]]"
+    ],
+    "BOSS cap": [
+        "-  [[Factory]]",
+        "   -   [[Tagilla]] will drop this hat upon death"
     ]
 }
